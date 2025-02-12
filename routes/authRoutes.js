@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../Models/User");
+const User = require("../Models/User.js");
 
 const router = express.Router();
 
@@ -28,7 +28,11 @@ router.post("/login", async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid email or password" });
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+        const secret = process.env.JWT_SECRET;
+        if (!secret) {
+            return res.status(500).json({ error: "JWT secret is not defined" });
+        }
+        const token = jwt.sign({ id: user._id }, secret, { expiresIn: "1d" });
         res.json({ token, user: { id: user._id, fullName: user.fullName, email: user.email } });
     } catch (error) {
         res.status(500).json({ error: error.message });
