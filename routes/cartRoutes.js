@@ -1,5 +1,5 @@
 const express = require("express");
-const Cart = require("../models/Cart");
+const Cart = require("../Models/Cart");
 const Product = require("../Models/Product"); // You can remove if you're not using this model here
 const router = express.Router();
 

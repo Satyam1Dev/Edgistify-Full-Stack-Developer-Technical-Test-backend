@@ -1,5 +1,5 @@
 const express = require("express");
-const Order = require("../models/Order"); // Ensure the path is correct
+const Order = require("../Models/Order"); // Ensure the path is correct
 const router = express.Router();
 
 // Place Order route
